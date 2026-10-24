@@ -70,7 +70,7 @@ export const LadyanaCompleteShoppingExperience = () => {
   async function loadCatalog(){setCatalogStatus('loading');const {data,error}=await supabase.from('products').select('*').eq('active',true).order('id');if(error){setCatalogStatus('error');return}setProducts(data||[]);setCatalogStatus('ready')}
   useEffect(()=>{void loadCatalog();const {data:{subscription}}=supabase.auth.onAuthStateChange((_event,session)=>setUser(session?.user??null));supabase.auth.getSession().then(({data})=>setUser(data.session?.user??null));return()=>subscription.unsubscribe()},[]);
   useEffect(()=>{let cancelled=false;setWish([]);if(user)supabase.from('wishlist').select('product_id').eq('user_id',user.id).then(({data,error})=>{if(cancelled)return;if(error)notify('Could not load your saved pieces. Please try again.');else setWish((data||[]).map(r=>r.product_id))});return()=>{cancelled=true}},[user?.id]);
-  const [page, setPage] = useState('home'),
+  const [page, setPage] = useState(new URLSearchParams(location.search).get('account')==='1'?'account':'home'),
     [category, setCategory] = useState('All'),
     [query, setQuery] = useState(''),
     [sort, setSort] = useState('Featured'),

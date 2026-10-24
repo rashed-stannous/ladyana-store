@@ -1,0 +1,9 @@
+.social-signin {margin:20px 0;max-width:540px}
+.social-signin p {font-size:14px;line-height:1.6;margin:12px 0}
+.social-buttons {display:grid;gap:10px}
+.social-buttons button {display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:8px;width:100%;min-height:48px;padding:12px 16px;border:1px solid #bcb2ac;border-radius:6px;background:#fff;color:#242020;font:inherit;font-size:15px;cursor:pointer}
+.social-buttons button:hover:not(:disabled) {background:#f8f2ef}
+.social-buttons button:focus-visible {outline:3px solid #996c58;outline-offset:3px}
+.social-buttons button:disabled {cursor:not-allowed;background:#f6f3f1;color:#766f6a}
+.social-buttons small {font-size:11px;border:1px solid #cfc4bc;border-radius:20px;padding:2px 7px}
+.auth-divider {font-size:13px;color:#75685f;margin:22px 0}
