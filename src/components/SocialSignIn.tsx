@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {supabase, supabaseKey, supabaseUrl} from '../supabase';
 import './SocialSignIn.css';
 
