@@ -1,1 +1,25 @@
-{"id": "/", "name": "Ladyana \u2014 Everyday Elegance", "short_name": "Ladyana", "description": "Shop Ladyana bags, footwear and accessories.", "start_url": "/", "scope": "/", "display": "standalone", "background_color": "#fffdf9", "theme_color": "#8c5c4e", "icons": [{"src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"}, {"src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}]}
+{
+  "id": "/",
+  "name": "Ladyana — Everyday Elegance",
+  "short_name": "Ladyana",
+  "description": "Shop Ladyana bags, footwear and accessories.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#fffdf9",
+  "theme_color": "#8c5c4e",
+  "icons": [
+    {
+      "src": "/ladyana-monogram-192-v2.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/ladyana-monogram-512-v2.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
