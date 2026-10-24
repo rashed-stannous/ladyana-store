@@ -18,3 +18,9 @@ The six products and prices are samples. Checkout, payment options, order tracki
 
 ## Validation
 Production build passes. Browser-key API check confirms six catalogue products are readable and anonymous wishlist access is denied. Supabase security advisor reports no database issues.
+
+## PWA and admin
+- Installable manifest, 192/512 PNG icons, Apple touch icon and offline fallback. The popup appears after load; dismissing it hides it for seven days. iOS shows manual installation instructions. No account, order or API responses are cached by the service worker.
+- `/admin` provides a protected dashboard, product create/edit/publish/hide, photo uploads, stock quantities, manual orders and payment/tracking status, order-derived customer summary and store settings.
+- Admin authorization uses `public.admin_members`, writable only by a trusted database operator. A customer cannot assign themselves this role. The owner must identify their exact registered, verified account before membership is granted.
+- Orders are manually recorded (e.g. Messenger/phone); the customer checkout remains a demo. Admins adjust stock separately. Online payment collection, automatic inventory reservation, coupons and refunds through payment gateways are not implemented.
