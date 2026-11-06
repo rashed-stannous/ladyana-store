@@ -36,3 +36,7 @@
 .ladyana .style-campaign{display:block;background:#fff8f1;height:auto;min-height:0;padding:0;overflow:visible}
 .ladyana .style-campaign>img{display:block;width:100%;height:auto;max-height:none;aspect-ratio:1774/887;object-fit:contain;margin:0}
 .ladyana .style-campaign-action{position:static;inset:auto;transform:none;display:flex;justify-content:center;margin:0;padding:16px 20px 24px;background:#fff8f1}
+
+/* Full brand lockup in the footer, including its tagline. */
+.ladyana .footer-logo{width:180px;height:auto;overflow:visible}
+.ladyana .footer-logo img{display:block;width:100%;height:auto}
