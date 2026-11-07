@@ -1,6 +1,8 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import './reset.css';
+import './components/generated/Ladyana.css';
+import './components/Admin.css';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) throw new Error('Application root missing');
@@ -26,9 +28,11 @@ function App() {
     let active=true;
     const load=async()=>{
       try {
+        if(new URLSearchParams(location.hash.slice(1)).get('type')==='recovery'){history.replaceState(null,'','/account/reset'+location.hash)}
         const isAdmin=location.pathname.startsWith('/admin');
-        const module = isAdmin ? await import('./components/AdminPanel') : await import('./components/generated/LadyanaCompleteShoppingExperience');
-        if(active)setPage(()=>isAdmin?module.AdminPanel:module.LadyanaCompleteShoppingExperience);
+        const isAccount=location.pathname.startsWith('/account/') || new URLSearchParams(location.hash.slice(1)).has('access_token') || new URLSearchParams(location.hash.slice(1)).has('error');
+        const module = isAccount ? await import('./components/AccountForm') : isAdmin ? await import('./components/AdminPanel') : await import('./components/generated/LadyanaCompleteShoppingExperience');
+        if(active)setPage(()=>isAccount?module.AccountPage:isAdmin?module.AdminPanel:module.LadyanaCompleteShoppingExperience);
         import('./components/InstallPrompt').then(m=>{if(active)setInstall(()=>m.InstallPrompt)}).catch(()=>{});
       } catch(e) { if(active)setError(e instanceof Error?e:new Error(String(e))); }
     };

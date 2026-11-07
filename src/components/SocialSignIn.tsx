@@ -35,14 +35,14 @@ export function SocialSignIn({busy,onBusy,onMessage}:{busy:boolean;onBusy:(value
   }
 
   return <div className="social-signin">
-    <p>Create an account or sign in with your existing account.</p>
+    {enabled && providers.some(p=>enabled[p.id]) && <p>Continue with a connected account, or use email below.</p>}
     <div className="social-buttons">
-      {providers.map(p=><button key={p.id} type="button" disabled={busy || !enabled?.[p.id]} onClick={()=>void signIn(p.id)}>
+      {providers.filter(p=>enabled?.[p.id]).map(p=><button key={p.id} type="button" disabled={busy || !enabled?.[p.id]} onClick={()=>void signIn(p.id)}>
         <span>Continue with {p.name}</span>
         {enabled && !enabled[p.id] && <small>Coming soon</small>}
       </button>)}
     </div>
     {!enabled && !failed && <p role="status">Checking sign-in options…</p>}
-    {failed && <p role="status">Social sign-in is temporarily unavailable. <button type="button" className="text-link" onClick={()=>setRetry(n=>n+1)}>Retry</button></p>}
+    {failed && <p role="status">Use email below. Social sign-in could not be checked. <button type="button" className="text-link" onClick={()=>setRetry(n=>n+1)}>Retry</button></p>}
   </div>;
 }
