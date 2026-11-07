@@ -29,14 +29,20 @@ Production build passes. Browser-key API check confirms six catalogue products a
 
 Google, Facebook and Apple buttons are shared by customer accounts and `/admin`.
 The UI reads Supabase's public Auth settings on load and only enables configured
-providers. Disabled providers display Coming soon; email sign-up remains available.
-The SDK handles browser OAuth sessions. Customer redirects return to `/?account=1`,
+providers. Disabled providers are hidden; email sign-up remains available.
+The SDK handles browser OAuth sessions. Customer redirects return to `/account/login`,
 while admin redirects return to `/admin`; social login never grants admin membership.
 
 Activation (store owner):
 1. In Supabase Authentication > URL Configuration set Site URL to
-   `https://ladyana-store.vercel.app` and allow these exact redirect URLs:
-   `https://ladyana-store.vercel.app/?account=1` and `https://ladyana-store.vercel.app/admin`.
+   `https://ladyanabd.com` and allow these exact redirect URLs:
+   - `https://ladyanabd.com/account/login`
+   - `https://ladyanabd.com/account/reset`
+   - `https://ladyanabd.com/admin`
+   - `https://ladyanabd.com/admin/login`
+   - `https://ladyanabd.com/admin/reset`
+   Remove obsolete storefront redirect entries after verifying the new paths.
+   The Supabase provider callback below is an API address and stays unchanged.
 2. In Authentication > Sign In / Providers configure the provider's client ID and
    secret. Enter secrets only in Supabase, never in this repository or chat.
 3. Use `https://hzvysxorvicovdtnmiak.supabase.co/auth/v1/callback` as the provider's

@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {supabase, supabaseKey, supabaseUrl} from '../supabase';
 import './SocialSignIn.css';
+import {siteOrigin} from '../site';
 
 const providers = [{id:'google',name:'Google'}, {id:'facebook',name:'Facebook'}, {id:'apple',name:'Apple'}] as const;
 type Provider = typeof providers[number]['id'];
@@ -26,7 +27,7 @@ export function SocialSignIn({busy,onBusy,onMessage}:{busy:boolean;onBusy:(value
     if(!enabled?.[provider] || busy)return;
     onBusy(true); onMessage('Opening secure sign-in…');
     try {
-      const redirectTo = location.origin + (location.pathname.startsWith('/admin')?'/admin':'/?account=1');
+      const redirectTo = siteOrigin + (location.pathname.startsWith('/admin')?'/admin':'/account/login');
       const {error} = await supabase.auth.signInWithOAuth({provider,options:{redirectTo}});
       if(error)throw error;
     } catch {

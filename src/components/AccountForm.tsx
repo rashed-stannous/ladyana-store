@@ -1,5 +1,6 @@
 import React,{useEffect,useState} from 'react';
 import {supabase,oauthFailed} from '../supabase';
+import {siteOrigin} from '../site';
 import {SocialSignIn} from './SocialSignIn';
 export function authMessage(error:any){const message=error?.message||'Unable to complete the request.';return /load failed|failed to fetch|network|fetch failed|timeout/i.test(message)?'Unable to reach Ladyana’s sign-in service. Check your connection and try again.':message;}
 export function AccountForm({user,admin=false}:{user:any;admin?:boolean}){
@@ -13,9 +14,9 @@ export function AccountForm({user,admin=false}:{user:any;admin?:boolean}){
  async function submit(e:React.FormEvent<HTMLFormElement>){e.preventDefault();const f=new FormData(e.currentTarget);setBusy(true);setMessage('');try{
  const email=String(f.get('email')||'').trim(),password=String(f.get('password')||'');
  if((mode==='signup'||mode==='reset')&&password!==String(f.get('confirm')))throw Error('The passwords do not match.');
- if(mode==='forgot'){const {error}=await supabase.auth.resetPasswordForEmail(email,{redirectTo:location.origin+base+'/reset'});if(error)throw error;setMessage('If this email has an account, a password reset link will arrive shortly. Check your spam folder too.');}
+ if(mode==='forgot'){const {error}=await supabase.auth.resetPasswordForEmail(email,{redirectTo:siteOrigin+base+'/reset'});if(error)throw error;setMessage('If this email has an account, a password reset link will arrive shortly. Check your spam folder too.');}
  else if(mode==='reset'){if(!user)throw Error('Open the password reset link from your email first.');const {error}=await supabase.auth.updateUser({password});if(error)throw error;if(admin){location.assign('/admin');return}setMode('login');history.replaceState(null,'',base+'/login');setMessage('Password updated. You can now continue.');}
- else if(mode==='signup'){const {data,error}=await supabase.auth.signUp({email,password,options:{emailRedirectTo:location.origin+base+'/login'}});if(error)throw error;setMessage(data.session?'Account created.': 'Check your email to confirm your account, then sign in. If you already have an account, use Sign in or Forgot password.');}
+ else if(mode==='signup'){const {data,error}=await supabase.auth.signUp({email,password,options:{emailRedirectTo:siteOrigin+base+'/login'}});if(error)throw error;setMessage(data.session?'Account created.': 'Check your email to confirm your account, then sign in. If you already have an account, use Sign in or Forgot password.');}
  else {const {error}=await supabase.auth.signInWithPassword({email,password});if(error)throw error;setMessage('Signed in.');}
  }catch(e){setMessage(authMessage(e))}finally{setBusy(false)}}
  async function requestAccess(){setBusy(true);try{const {error}=await supabase.rpc('request_admin_access');if(error)throw error;setRequested(true);setMessage('Your request is awaiting approval by the store owner.')}catch(e){setMessage(authMessage(e))}finally{setBusy(false)}}
