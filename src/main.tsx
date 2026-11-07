@@ -22,7 +22,6 @@ class ErrorBoundary extends React.Component<React.PropsWithChildren, {error: Err
 }
 function App() {
   const [Page,setPage] = React.useState<React.ComponentType | null>(null);
-  const [Install,setInstall] = React.useState<React.ComponentType | null>(null);
   const [error,setError] = React.useState<Error|null>(null);
   React.useEffect(()=>{
     let active=true;
@@ -33,7 +32,7 @@ function App() {
         const isAccount=location.pathname.startsWith('/account/') || new URLSearchParams(location.hash.slice(1)).has('access_token') || new URLSearchParams(location.hash.slice(1)).has('error');
         const module = isAccount ? await import('./components/AccountForm') : isAdmin ? await import('./components/AdminPanel') : await import('./components/generated/LadyanaCompleteShoppingExperience');
         if(active)setPage(()=>isAccount?module.AccountPage:isAdmin?module.AdminPanel:module.LadyanaCompleteShoppingExperience);
-        import('./components/InstallPrompt').then(m=>{if(active)setInstall(()=>m.InstallPrompt)}).catch(()=>{});
+        if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js').catch(()=>{});
       } catch(e) { if(active)setError(e instanceof Error?e:new Error(String(e))); }
     };
     void load();
@@ -41,6 +40,6 @@ function App() {
   },[]);
   if(error)return <StartupError error={error} retry={()=>location.reload()}/>;
   if(!Page)return <div style={{fontFamily:'system-ui',padding:32,textAlign:'center',marginTop:'20vh'}}>Loading Ladyana…</div>;
-  return <><Page/>{Install&&<Install/>}</>;
+  return <Page/>;
 }
 createRoot(rootElement).render(<ErrorBoundary><App/></ErrorBoundary>);
